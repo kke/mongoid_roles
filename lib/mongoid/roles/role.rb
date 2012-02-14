@@ -49,7 +49,7 @@ module Mongoid
         # object. E.g. subject.roles_for(object).map(&:role).sort will give you role names in alphabetical order.
         # If called with a string, will return roles for all objects of that type. E.g. subject.roles_for('Group').
         def roles_for (object)
-          if object.kind_of?(String) || object.kind_of=(Symbol)
+          if object.kind_of?(String) || object.kind_of?(Symbol)
             find_objects_by_type(object.to_s.singularize.camelcase)
           else
             find_object(object)
