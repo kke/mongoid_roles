@@ -49,7 +49,7 @@ module Mongoid
           roles.find_or_create_by(:role => role, :auth_object_id => nil, :auth_object_type => nil)
       end
 
-      def role_invitations_for(object_type, field)
+      def role_invitations_to(object_type, field)
         eval(object_type.to_s.classify).where(
           "role_invitations.auth_subject_type" => self.class.to_s,
           "role_invitations.auth_subject_field" => field.to_s,

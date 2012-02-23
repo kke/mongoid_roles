@@ -46,6 +46,14 @@ module Mongoid
         )
       end   
 
+      def role_invitations_for(object, field)
+        role_invitations.where(
+          :auth_subject_type => object.class.to_s,
+          :auth_subject_field => field.to_s,
+          :auth_subject_value => object[field]
+        )
+      end
+
     end
   end
 end
