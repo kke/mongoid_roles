@@ -2,6 +2,7 @@ module Mongoid
   module Roles
     class Role
       include Mongoid::Document
+      include Mongoid::Timestamps
 
       embedded_in   :auth_subject
 
@@ -10,7 +11,7 @@ module Mongoid
       field :auth_object_id,    :type => String
 
       scope :find_object, lambda  {|object| where(:auth_object_type => object.class.name, :auth_object_id => object.id)}
-      scope :find_role,   lambda  {|role, object = nil|  
+      scope :find_role, lambda { |role, object=nil|
         object ?  where(:role => role, :auth_object_type => object.class.name, :auth_object_id => object.id) :
                   where(:role => role, :auth_object_type => nil, :auth_object_id => nil)
       }

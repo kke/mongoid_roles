@@ -3,6 +3,10 @@ module Mongoid
     module Object
       extend ActiveSupport::Concern
 
+      included do
+        embeds_many :role_invitations, :class_name => 'Mongoid::Roles::RoleInvitation'
+      end
+
       #  object.accepts_role?(role_name, subject). An alias for subject.has_role?(role_name, object).
       def accepts_role?(role_name, subject)
         subject.has_role?(role_name, self)
@@ -32,6 +36,16 @@ module Mongoid
       def accepts_roles_by(subject)
         subject.roles_for(self)
       end
+
+      def has_role_invitation! (role, auth_subject_type, auth_subject_field, auth_subject_value)
+        role_invitations.find_or_create_by(
+          :role => role, 
+          :auth_subject_type => auth_subject_type, 
+          :auth_subject_field => auth_subject_field,
+          :auth_subject_value => auth_subject_value
+        )
+      end   
+
     end
   end
 end
