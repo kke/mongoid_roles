@@ -47,8 +47,16 @@ module Mongoid
         auth_object ?
           roles.find_or_create_by(:role => role, :auth_object_id => auth_object.id.to_s, :auth_object_type => auth_object.class.name) :
           roles.find_or_create_by(:role => role, :auth_object_id => nil, :auth_object_type => nil)
-          
       end
+
+      def role_invitations_for(object_type, field)
+        eval(object_type).classify.where(
+          "role_invitations.auth_subject_type" => self.class.to_s,
+          "role_invitations.auth_subject_field" => field.to_s,
+          "role_invitations.auth_subject_value" => self[field.to_sym]
+        )
+      end
+
     end
   end
 end
