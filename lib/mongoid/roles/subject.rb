@@ -50,7 +50,7 @@ module Mongoid
       end
 
       def role_invitations_for(object_type, field)
-        eval(object_type).classify.where(
+        eval(object_type.to_s.classify).where(
           "role_invitations.auth_subject_type" => self.class.to_s,
           "role_invitations.auth_subject_field" => field.to_s,
           "role_invitations.auth_subject_value" => self[field.to_sym]
