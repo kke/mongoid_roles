@@ -13,7 +13,7 @@ module Mongoid
     
       class << self
         def auth_object
-          eval(self.metadata.inverse_class_name).first(:conditions => {'role_invitations._id' => self[:_id]})
+          send(self.metadata.inverse_class_name).first(:conditions => {'role_invitations._id' => self[:_id]})
         end
       end
     end
