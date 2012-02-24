@@ -10,7 +10,12 @@ module Mongoid
       field :auth_subject_type,        :type => String
       field :auth_subject_field,       :type => String
       field :auth_subject_value,       :type => String
-      
+    
+      class << self
+        def auth_object
+          eval(self.metadata.inverse_class_name).find('role_invitations._id' => self[:_id])
+        end
+      end
     end
   end
 end
