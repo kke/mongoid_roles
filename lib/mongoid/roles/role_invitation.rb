@@ -11,10 +11,8 @@ module Mongoid
       field :auth_subject_field,       :type => String
       field :auth_subject_value,       :type => String
     
-      class << self
-        def auth_object
-          send(self.metadata.inverse_class_name).first(:conditions => {'role_invitations._id' => self[:_id]})
-        end
+      def auth_object
+        eval(metadata.inverse_class_name).first(:conditions => {'role_invitations._id' => _id})
       end
     end
   end
