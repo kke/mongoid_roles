@@ -3,10 +3,10 @@ module Mongoid
     @@subjects = []
     @@objects = []
     def self.subjects
-      @@subjects
+      @@subjects.uniq!
     end
     def self.objects
-      @@objects
+      @@objects.uniq!
     end
   end
 end
