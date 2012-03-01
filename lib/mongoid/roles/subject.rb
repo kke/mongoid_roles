@@ -4,6 +4,7 @@ module Mongoid
       extend ActiveSupport::Concern
 
       included do
+        Mongoid::Roles.subjects << self.name
         embeds_many :roles, :class_name => 'Mongoid::Roles::Role'
     
         # subject.has_role?(role, object = nil). Returns true of false (has or has not).

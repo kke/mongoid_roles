@@ -5,6 +5,7 @@ module Mongoid
 
       included do
         embeds_many :role_invitations, :class_name => 'Mongoid::Roles::RoleInvitation'
+        Mongoid::Roles.objects << self.name
       end
 
       #  object.accepts_role?(role_name, subject). An alias for subject.has_role?(role_name, object).
@@ -52,6 +53,16 @@ module Mongoid
           :auth_subject_field => field.to_s,
           :auth_subject_value => object[field]
         )
+      end
+
+      def role_subjects
+        subjects = []
+        Mongoid::Roles.subjects.each do |subject_type|
+          eval(subject_type).where('roles.auth_object_type' => self.class.to_s, 'roles.auth_object_id' => self._id.to_s).each do |o| 
+            subjects << o
+          end
+        end
+        subjects
       end
 
     end
