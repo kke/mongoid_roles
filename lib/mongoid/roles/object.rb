@@ -57,7 +57,7 @@ module Mongoid
 
       def role_subjects
         subjects = []
-        Mongoid::Roles.subjects.each do |subject_type|
+        Mongoid::Roles.subjects.uniq.each do |subject_type|
           eval(subject_type).where('roles.auth_object_type' => self.class.to_s, 'roles.auth_object_id' => self._id.to_s).each do |o| 
             subjects << o
           end
